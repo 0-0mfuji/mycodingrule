@@ -13,6 +13,37 @@
 安全性も向上しています。
 
 ## 常に全ての警告を表示してコンパイルすること
+```
+CFLAGS += -Wall -Wextra -Wpedantic \
+          -Wformat=2 -Wno-unused-parameter -Wshadow \
+          -Wwrite-strings -Wstrict-prototypes -Wold-style-definition \
+          -Wredundant-decls -Wnested-externs -Wmissing-include-dirs
+
+# GCC warnings that Clang doesn't provide:
+ifeq ($(CC),gcc)
+    CFLAGS += -Wjump-misses-init -Wlogical-op
+endif
+
+# Compiling with optimizations
+CFLAGS += -O2
+```
+エラーFlagは-Wall -Wextra -Werrorが標準ですが、上記のようにすれば
+十分な数のエラーをつけることができます。
+最適化もエラーの発見に役立つため、例外でコンパイルでの最適化を行います。
+
+## タブを使用すると見た目は良くなりますが、統一感がないため全てスペースにすること
+タブは利用すると見た目は綺麗になりますが、人間はスペースとタブの違いを瞬時に理解して
+処理するようにはできていません。永久に議論されることではありますが、
+私はスペースで統一することを選びます。
+* Tabキーはエディターに何かを割り当てられていることが多く、Tabバイトの表す長さはOSによって異なる
+* ソフトウェアによってTabバイトを処理できない可能性があり、Tabの排除に迫られた時それは困難を極める可能性があるため
+デフォルトで設定されたUnixシステム、および古代のダム端末やテレタイプでは、
+TAB文字が「現在の列が8の倍数になるまで右に移動する」ことを意味するのが伝統でした。
+WindowsとMacのエディタでは、デフォルトの解釈は同じですが、
+8の倍数の代わりになぜか4の倍数が使用されます。
+ASCIIのTAB文字タブ文字はこれらのスペースを圧縮するために使用されていました。
+ですが、現代ではメモリは十分確保できるため圧縮は実行バイナリだけで十分です。
+
 
 
 　
