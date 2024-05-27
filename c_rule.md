@@ -14,14 +14,38 @@
 
 ## 常に全ての警告を表示してコンパイルすること
 ```
-CFLAGS += -Wall -Wextra -Wpedantic \
-          -Wformat=2 -Wno-unused-parameter -Wshadow \
-          -Wwrite-strings -Wstrict-prototypes -Wold-style-definition \
-          -Wredundant-decls -Wnested-externs -Wmissing-include-dirs
+CFLAGS += -g3 -std=c18
+CFLAGS += -O3
+CFLAGS += -fstack-size-section
+# CFLAGS += -D_FORTIFY_SOURCE=2
+
+WERRORS += -Wall -Wextra
+# WERRORS += -Werror
+WERRORS += -Wpedantic
+WERRORS += -Wshadow
+WERRORS += -Wwrite-strings
+WERRORS += -Wstrict-prototypes
+WERRORS += -Wold-style-definition
+WERRORS += -Wno-unused-parameter
+WERRORS += -Wredundant-decls
+WERRORS += -Wnested-externs
+WERRORS += -Wmissing-include-dirs
+WERRORS += -Werror=implicit-function-declaration
+WERRORS += -Werror=int-conversion
+WERRORS += -Werror=incompatible-pointer-types
+WERRORS += -Werror=shift-count-overflow
+WERRORS += -Werror=switch
+WERRORS += -Werror=return-type
+WERRORS += -Werror=pointer-integer-compare
+WERRORS += -Werror=tautological-constant-out-of-range-compare
+
 
 # GCC warnings that Clang doesn't provide:
+
 ifeq ($(CC),gcc)
-    CFLAGS += -Wjump-misses-init -Wlogical-op
+    WERRORS += -Wjump-misses-init -Wlogical-op
+else ifeq ($(CC),clang)
+    WERRORS += -Weverything
 endif
 
 # Compiling with optimizations
