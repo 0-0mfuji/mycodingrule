@@ -14,42 +14,39 @@
 
 ## 常に全ての警告を表示してコンパイルすること
 ```
-CFLAGS += -g3 -std=c18
-CFLAGS += -O3
-CFLAGS += -fstack-size-section
-# CFLAGS += -D_FORTIFY_SOURCE=2
+CFLAGS += -g3                     # Enable level 3 debugging information レベル3のデバッグ情報を有効にする
+CFLAGS += -std=c18                # Use the C18 standard C18標準を使用する
+CFLAGS += -O3                     # Optimize for maximum speed (level 3 optimization) 最大速度のための最適化（レベル3の最適化）
+CFLAGS += -fstack-size-section    # Place the stack size in its own section スタックサイズを独自のセクションに配置する
+# CFLAGS += -D_FORTIFY_SOURCE=2    # Enable additional security checks for buffer overflows (optional) バッファオーバーフローのための追加のセキュリティチェックを有効にする（オプション）
 
-WERRORS += -Wall -Wextra
-# WERRORS += -Werror
-WERRORS += -Wpedantic
-WERRORS += -Wshadow
-WERRORS += -Wwrite-strings
-WERRORS += -Wstrict-prototypes
-WERRORS += -Wold-style-definition
-WERRORS += -Wno-unused-parameter
-WERRORS += -Wredundant-decls
-WERRORS += -Wnested-externs
-WERRORS += -Wmissing-include-dirs
-WERRORS += -Werror=implicit-function-declaration
-WERRORS += -Werror=int-conversion
-WERRORS += -Werror=incompatible-pointer-types
-WERRORS += -Werror=shift-count-overflow
-WERRORS += -Werror=switch
-WERRORS += -Werror=return-type
-WERRORS += -Werror=pointer-integer-compare
-WERRORS += -Werror=tautological-constant-out-of-range-compare
-
+WERRORS += -Wall                               # Enable all standard warnings すべての標準的な警告を有効にする
+WERRORS += -Wextra                             # Enable extra warnings 追加の警告を有効にする
+# WERRORS += -Werror                            # Treat all warnings as errors (optional) すべての警告をエラーとして扱う（オプション）
+WERRORS += -Wpedantic                          # Issue all the mandatory diagnostics demanded by strict ISO C 厳密なISO Cで要求されるすべての必須診断を発行する
+WERRORS += -Wshadow                            # Warn whenever a local variable shadows another variable ローカル変数が他の変数を隠すときに警告を発する
+WERRORS += -Wwrite-strings                     # Warn about deprecated string constants 非推奨の文字列定数について警告する
+WERRORS += -Wstrict-prototypes                 # Warn if a function is declared or defined without specifying the argument types 引数の型を指定せずに関数が宣言または定義された場合に警告する
+WERRORS += -Wold-style-definition              # Warn if an old-style (K&R) function definition is used 古いスタイル（K&R）の関数定義が使用されている場合に警告する
+WERRORS += -Wno-unused-parameter               # Do not warn about unused parameters 未使用のパラメータについて警告しない
+WERRORS += -Wredundant-decls                   # Warn if anything is declared more than once in the same scope 同じスコープ内で何かが複数回宣言されている場合に警告する
+WERRORS += -Wnested-externs                    # Warn if a function is declared with an extern keyword inside a function 関数内でexternキーワードを使用して関数が宣言されている場合に警告する
+WERRORS += -Wmissing-include-dirs              # Warn if an #include directive could not find a file #includeディレクティブがファイルを見つけられない場合に警告する
+WERRORS += -Werror=implicit-function-declaration    # Treat implicit function declarations as errors 暗黙の関数宣言をエラーとして扱う
+WERRORS += -Werror=int-conversion                   # Treat invalid type conversions as errors 無効な型変換をエラーとして扱う
+WERRORS += -Werror=incompatible-pointer-types       # Treat incompatible pointer types as errors 互換性のないポインタ型をエラーとして扱う
+WERRORS += -Werror=shift-count-overflow             # Treat shift count overflows as errors シフトカウントオーバーフローをエラーとして扱う
+WERRORS += -Werror=switch                           # Treat switch statements without a default case as errors デフォルトケースのないswitch文をエラーとして扱う
+WERRORS += -Werror=return-type                      # Treat incorrect return types as errors 不正な戻り値の型をエラーとして扱う
+WERRORS += -Werror=pointer-integer-compare          # Treat pointer and integer comparisons as errors ポインタと整数の比較をエラーとして扱う
+WERRORS += -Werror=tautological-constant-out-of-range-compare    # Treat tautological comparisons as errors 自明な比較をエラーとして扱う
 
 # GCC warnings that Clang doesn't provide:
-
 ifeq ($(CC),gcc)
     WERRORS += -Wjump-misses-init -Wlogical-op
 else ifeq ($(CC),clang)
     WERRORS += -Weverything
 endif
-
-# Compiling with optimizations
-CFLAGS += -O2
 ```
 エラーFlagは-Wall -Wextra -Werrorが標準ですが、上記のようにすれば
 十分な数のエラーをつけることができます。
