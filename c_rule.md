@@ -11,6 +11,7 @@
 これによりエラーを未然に防ぐことができ、互換性を向上させます。
 またc18はc89に比べてはるかに優れています。様々な機能が追加され
 安全性も向上しています。
+またgcc-14を使用するとなお良いです。
 
 ## 常に全ての警告を表示してコンパイルすること
 ```
@@ -43,7 +44,7 @@ WERRORS += -Werror=tautological-constant-out-of-range-compare    # Treat tautolo
 
 # GCC warnings that Clang doesn't provide:
 ifeq ($(CC),gcc)
-    WERRORS += -Wjump-misses-init -Wlogical-op
+    WERRORS += -Wjump-misses-init -Wlogical-op -fanalyzer
 else ifeq ($(CC),clang)
     WERRORS += -Weverything
 endif
@@ -51,6 +52,8 @@ endif
 エラーFlagは-Wall -Wextra -Werrorが標準ですが、上記のようにすれば
 十分な数のエラーをつけることができます。
 最適化もエラーの発見に役立つため、例外でコンパイルでの最適化を行います。
+またgcc-14からエラーに関する解説がつくようになりました。
+-fanalyzerオプションをつけることを推奨します。
 
 ## 処理速度や関数の理解を深めるためにflamegraphを使用すること
 
