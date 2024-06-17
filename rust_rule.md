@@ -10,6 +10,19 @@ Cから呼び出されることを想定したRustの言語仕様も定義する
 
 ## 常にABIを意識してコンパイルすること
 
+'''
+extern "Rust"-Zcallconv=legacy-Zcallconv=fast-O-Zcallconv=fast
+'''
+
+'''
+fn secret_call() -> i32 {
+  extern "Rust" {
+    fn my_func() -> i32;
+  }
+  unsafe { my_func() }
+}
+'''
+
 ## コードフォーマッタを使用し、どのコードフォーマッタを使用しているか明示すること
 
 ## 処理速度や関数の理解を深めるためにflamegraphを使用すること
